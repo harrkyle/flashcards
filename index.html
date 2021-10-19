@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <style>
+      #letter {
+        text-align: center;
+        font-size: 74vh;
+        height: 96vh;
+        box-sizing: border-box;
+        width: 70vh;
+        border: 1px solid black;
+        border-radius: 3vh;
+        margin: 2vh auto;
+        user-select: none;
+      }
+      body {
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+    <script>
+      document.getElementById("letter").addEventListener("click",
+          () => document.getElementById("letter").innerHTML = 
+                String.fromCharCode(Math.floor(Math.random() * 26) + 'A'.charCodeAt(0)));
+    </script>
+  </head>
+  <body>
+    <div id=letter>A</div>
+  </body>
+</html>
