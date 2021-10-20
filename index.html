@@ -3,10 +3,10 @@
     <style>
       #letter {
         text-align: center;
-        font-size: min(74vh, calc(100vw - 4vh));
+        font-size: min(44vh, calc(100vw - 4vh));
         height: 96vh;
         box-sizing: border-box;
-        width: min(70vh, calc(100vw - 4vh));
+        width: min(55vh, calc(100vw - 4vh));
         border: 1px solid black;
         border-radius: 3vh;
         margin: 2vh auto;
@@ -20,11 +20,15 @@
     </style>
  </head>
   <body>
-    <div id=letter>A</div>
+    <div id=letter>A<br/>a</div>
   </body>
   <script>
     document.getElementById("letter").addEventListener("click",
-        () => document.getElementById("letter").innerHTML = 
-              String.fromCharCode(Math.floor(Math.random() * 26) + 'A'.charCodeAt(0)));
+        () => {
+              let letterCode = Math.floor(Math.random() * 26) + 'A'.charCodeAt(0);
+              document.getElementById("letter").innerHTML = 
+                String.charCodeAt(letterCode) + '<br /> ' + String.charCodeAt(letterCode + 32);
+            }
+       );
   </script>
 </html>
