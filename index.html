@@ -27,7 +27,7 @@
         () => {
               let letterCode = Math.floor(Math.random() * 26) + 'A'.charCodeAt(0);
               document.getElementById("letter").innerHTML = 
-                String.charCodeAt(letterCode) + '<br /> ' + String.charCodeAt(letterCode + 32);
+                String.charCode(letterCode) + '<br /> ' + String.charCode(letterCode + 32);
             }
        );
   </script>
