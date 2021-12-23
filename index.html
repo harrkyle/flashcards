@@ -20,15 +20,27 @@
     </style>
  </head>
   <body>
-    <div id=letter>A<br/>a</div>
+    <div id=value></div>
   </body>
   <script>
-    document.getElementById("letter").addEventListener("click",
-        () => {
-              let letterCode = Math.floor(Math.random() * 26) + 'A'.charCodeAt(0);
-              document.getElementById("letter").innerHTML = 
-                String.fromCharCode(letterCode) + '<br /> ' + String.fromCharCode(letterCode + 32);
-            }
-       );
+    var alpha = {
+      length: 26,
+      get: (idx) => {
+        let letterCode = idx + 'A'.charCodeAt(0);
+        return String.fromCharCode(letterCode + '<br />' + String.fromCharCode(letterCode + 32); 
+    };
+    
+    function* startRandom(cardSet) {
+      while (true) {
+        let indexes = Array.from({length: cardSet.length}, (e, i)=> i);
+        while (indexes.length > 0) {
+          yield cardSet.get(indexes.splice(Math.random(indexes.length))[0]);
+        }
+    }
+      
+    var game = startRandom(alpha);
+      
+    document.getElementById("card").innerHTML = game.next().value;
+    document.getElementById("card").addEventListener("click", () => document.getElementById("card").innerHTML = game.next().value);
   </script>
 </html>
