@@ -28,6 +28,7 @@
       get: (idx) => {
         let letterCode = idx + 'A'.charCodeAt(0);
         return String.fromCharCode(letterCode) + '<br />' + String.fromCharCode(letterCode + 32); 
+      }
     };
     
     function* startRandom(cardSet) {
