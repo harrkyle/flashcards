@@ -35,7 +35,7 @@
       while (true) {
         let indexes = Array.from({length: cardSet.length}, (e, i)=> i);
         while (indexes.length > 0) {
-          yield cardSet.get(indexes.splice(Math.random(indexes.length))[0]);
+          yield cardSet.get(indexes.splice(Math.random(indexes.length), 1)[0]);
         }
       }
     }
