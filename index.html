@@ -1,7 +1,7 @@
 <html>
   <head>
     <style>
-      #letter {
+      #card {
         text-align: center;
         font-size: min(40vh, calc(100vw - 4vh));
         height: 96vh;
@@ -27,7 +27,7 @@
       length: 26,
       get: (idx) => {
         let letterCode = idx + 'A'.charCodeAt(0);
-        return String.fromCharCode(letterCode + '<br />' + String.fromCharCode(letterCode + 32); 
+        return String.fromCharCode(letterCode) + '<br />' + String.fromCharCode(letterCode + 32); 
     };
     
     function* startRandom(cardSet) {
