@@ -20,13 +20,14 @@
     </style>
  </head>
   <body>
-    <div id=card></div>
+    
   </body>
   <script>
     var decks = [
       {
         title: "Alphabet",
         label: "ABC",
+        modes: ['random', 'sequential'],
         length: 26,
         get: (idx) => {
           let letterCode = idx + 'A'.charCodeAt(0);
@@ -36,21 +37,16 @@
       {
         title: "Numbers",
         label: "123",
+        modes: ['random', 'sequential'],
         length: 10,
         get: (idx) => '' + idx
       }
     ];
     
     var modes = {
-      random: function* (cardSet) {
-          while (true) {
-            let indexes = Array.from({length: cardSet.length}, (e, i)=> i);
-            while (indexes.length > 0) {
-              yield cardSet.get(indexes.splice(Math.floor(Math.random() * indexes.length), 1)[0]);
-            }
-          }
-        },
-      sequential: function* (cardSet) {
+      random: {
+        label: "Random",
+        start: function* (cardSet) {
           while (true) {
             let indexes = Array.from({length: cardSet.length}, (e, i)=> i);
             while (indexes.length > 0) {
@@ -58,7 +54,19 @@
             }
           }
         }
-
+      },
+      sequential: {
+        label: "Sequential",
+        start: function* (cardSet) {
+          while (true) {
+            let index = 0;
+            while (true) {
+              index = index + 1 % cardSet.length;
+              yield index;
+            }
+          }
+        }
+      }
     };
     
     var body = document.getElementsByTagName('body')[0];
@@ -66,15 +74,23 @@
     var bodyHtml = '';
     
     for (var i in decks) {
-      bodyHtml += "<div class='deck' click='start(" + i + ")'>" + decks[i].label + "</div>"
+      bodyHtml += "<div class='deck' click='select(" + i + ")'>" + decks[i].label + "</div>"
     }
     body.innerHTML = bodyHtml;
     
-    function start(deck) {
+    function select(deck) {
+      bodyHtml = '';
+      for (var mode in modes) {
+        bodyHtml += "<input type='radio' click='start(" + deck + "," + mode + ")'>" + modes[mode].label + "</input>"
+      }
+      body.innerHTML = bodyHtml;
     }
-    var game = startRandom(alpha);
-      
-    document.getElementById("card").innerHTML = game.next().value;
-    document.getElementById("card").addEventListener("click", () => document.getElementById("card").innerHTML = game.next().value);
+    
+    function start(deck, mode) {
+      var game = modes[mode].start(decks[deck]);
+      body.innerHTML = '<div id=card></div>';
+      document.getElementById("card").innerHTML = game.next().value;
+      document.getElementById("card").addEventListener("click", () => document.getElementById("card").innerHTML = game.next().value);
+    }
   </script>
 </html>
