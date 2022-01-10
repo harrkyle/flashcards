@@ -23,23 +23,55 @@
     <div id=card></div>
   </body>
   <script>
-    var alpha = {
-      length: 26,
-      get: (idx) => {
-        let letterCode = idx + 'A'.charCodeAt(0);
-        return String.fromCharCode(letterCode) + '<br />' + String.fromCharCode(letterCode + 32); 
+    var decks = [
+      {
+        title: "Alphabet",
+        label: "ABC",
+        length: 26,
+        get: (idx) => {
+          let letterCode = idx + 'A'.charCodeAt(0);
+          return String.fromCharCode(letterCode) + '<br />' + String.fromCharCode(letterCode + 32); 
+        }
+      },
+      {
+        title: "Numbers",
+        label: "123",
+        length: 10,
+        get: (idx) => '' + idx
       }
+    ];
+    
+    var modes = {
+      random: function* (cardSet) {
+          while (true) {
+            let indexes = Array.from({length: cardSet.length}, (e, i)=> i);
+            while (indexes.length > 0) {
+              yield cardSet.get(indexes.splice(Math.floor(Math.random() * indexes.length), 1)[0]);
+            }
+          }
+        },
+      sequential: function* (cardSet) {
+          while (true) {
+            let indexes = Array.from({length: cardSet.length}, (e, i)=> i);
+            while (indexes.length > 0) {
+              yield cardSet.get(indexes.splice(Math.floor(Math.random() * indexes.length), 1)[0]);
+            }
+          }
+        }
+
     };
     
-    function* startRandom(cardSet) {
-      while (true) {
-        let indexes = Array.from({length: cardSet.length}, (e, i)=> i);
-        while (indexes.length > 0) {
-          yield cardSet.get(indexes.splice(Math.floor(Math.random() * indexes.length), 1)[0]);
-        }
-      }
+    var body = document.getElementsByTagName('body')[0];
+    
+    var bodyHtml = '';
+    
+    for (var i in decks) {
+      bodyHtml += "<div class='deck' click='start(" + i + ")'>" + decks[i].label + "</div>"
     }
-      
+    body.innerHTML = bodyHtml;
+    
+    function start(deck) {
+    }
     var game = startRandom(alpha);
       
     document.getElementById("card").innerHTML = game.next().value;
