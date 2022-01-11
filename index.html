@@ -71,23 +71,40 @@
     
     var body = document.getElementsByTagName('body')[0];
     
-    var bodyHtml = '';
+    body.innerHTML = '';
     
     for (var i in decks) {
-      bodyHtml += "<div class='deck' click='select(" + i + ")'>" + decks[i].label + "</div>"
+      let div = document.createElement('div');
+      div.setAttribute('class', 'deck');
+      div.addEventListener('click', () => select(i));
+      div.innerHTML = decks[i].label;
+      body.appendChild(div);
     }
-    body.innerHTML = bodyHtml;
     
     function select(deck) {
-      bodyHtml = '';
+      body.innerHTML = '';
       for (var mode in modes) {
-        bodyHtml += "<input type='radio' click='start(" + deck + "," + mode + ")'>" + modes[mode].label + "</input>"
+        let div = document.createElement('div');
+        let input = document.createElement('input');
+        input.setAttribute('name', 'mode');
+        input.setAttribute('type', 'radio');
+        input.setAttribute('id', 'mode_' + mode)
+        input.value = mode;
+        div.appendChild(input);
+        let label = document.createElement('label');
+        label.setAttribute('for', 'mode_' + mode);
+        label.innerHTML = modes[mode].label;
+        div.appendChild(label);
+        body.appendChild(div);
       }
-      body.innerHTML = bodyHtml;
+      let start = document.createElement('button');
+      start.addEventListener('click', () => startGame(deck, document.querySelector('input[name="mode"]:checked').value));
+      start.innerHTML = 'Start Game';
+      body.appendChild(start);
     }
     
-    function start(deck, mode) {
-      var game = modes[mode].start(decks[deck]);
+    function startGame(deck, mode) {
+      let game = modes[mode].start(decks[deck]);
       body.innerHTML = '<div id=card></div>';
       document.getElementById("card").innerHTML = game.next().value;
       document.getElementById("card").addEventListener("click", () => document.getElementById("card").innerHTML = game.next().value);
