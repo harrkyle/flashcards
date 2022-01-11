@@ -13,6 +13,14 @@
         -webkit-user-select: none;
         user-select: none;
       }
+      .deck, .configuration {
+        font-size: 4em;
+        box-sizing: border-box;
+        width: calc(100vw - 4vh);
+        border: 1px solid black;
+        border-radius: 3vh;
+        margin: 1em auto;
+      }
       body {
         padding: 0;
         margin: 0;
@@ -76,7 +84,7 @@
     for (var i in decks) {
       let div = document.createElement('div');
       div.setAttribute('class', 'deck');
-      div.addEventListener('click', () => select(i));
+      div.addEventListener('click', ((j) => () => select(j))(i));
       div.innerHTML = decks[i].label;
       body.appendChild(div);
     }
@@ -85,6 +93,7 @@
       body.innerHTML = '';
       for (var mode in modes) {
         let div = document.createElement('div');
+        div.setAttribute('class', 'configuration');
         let input = document.createElement('input');
         input.setAttribute('name', 'mode');
         input.setAttribute('type', 'radio');
