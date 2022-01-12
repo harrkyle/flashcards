@@ -70,8 +70,9 @@
           while (true) {
             let index = 0;
             while (true) {
+              let current = index;
               index = (index + 1) % cardSet.length;
-              yield cardSet.get(index);
+              yield cardSet.get(current);
             }
           }
         }
